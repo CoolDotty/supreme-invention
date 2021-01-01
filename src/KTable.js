@@ -41,7 +41,7 @@ function KTable(props) {
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
-            <TableCell align="right">Price</TableCell>
+            <TableCell align="right">Current Price</TableCell>
             <TableCell align="right">Market Cap</TableCell>
           </TableRow>
         </TableHead>

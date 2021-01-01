@@ -71,7 +71,7 @@ function KChart(props) {
         <ValueAxis />
 
         <BarSeries
-          name="Price"
+          name="Current Price"
           valueField="price"
           argumentField="name"
         />
@@ -85,7 +85,7 @@ function KChart(props) {
         <ChartTitle text="Prices of Various Crypto" />
         <Stack
           stacks={[
-            { series: ['Price', 'Highest'] },
+            { series: ['Current Price', 'Highest'] },
           ]}
         />
       </Chart>
