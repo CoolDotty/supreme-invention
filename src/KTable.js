@@ -6,37 +6,46 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { connect } from 'react-redux'
+import { connect, useStore } from 'react-redux';
+import Title from './Title'
 
 const useStyles = makeStyles((theme) => ({
+  container: {
+    padding: theme.spacing(4),
+    width: '100%',
+  },
 }));
 
-function createData(name, price, change) {
-    return { name, price, change };
+function createEmpty() {
+  return { name: '-', price: '-', change: '-' };
 }
-
-const rows = [
-    createData('Bitcoin', 100, 1),
-    createData('Ether', 50, -1),
-    createData('XMP', 0.001, 3),
-];
 
 function KTable() {
   const classes = useStyles();
 
+  const store = useStore().getState();
+  let rows = Array(10).fill(createEmpty(), 0);
+  if (store.status) {
+    // TODO:
+    rows = [{ name: '1', price: '1', change: '1' }];
+  }
+
   return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} size="small" aria-label="a dense table">
+    <TableContainer component={Paper} className={classes.container}>
+      <Title>
+        Table
+            </Title>
+      <Table className={classes.table} size="small" aria-label="Coin Data">
         <TableHead>
           <TableRow>
-            <TableCell>Coin</TableCell>
+            <TableCell>Name</TableCell>
             <TableCell align="right">Price</TableCell>
             <TableCell align="right">Change</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.name}>
+          {rows.map((row, i) => (
+            <TableRow key={row.name + i}>
               <TableCell component="th" scope="row">
                 {row.name}
               </TableCell>
@@ -54,6 +63,6 @@ const mapStateToProps = (state) => {
   return {}
 }
 
-const mapDispatchToProps = { }
+const mapDispatchToProps = {}
 
 export default connect(mapStateToProps, mapDispatchToProps)(KTable)

@@ -8,7 +8,14 @@ import Avatar from '@material-ui/core/Avatar';
 import Container from '@material-ui/core/Container';
 import KChart from './KChart';
 import KTable from './KTable';
-// import '@devexpress/dx-react-chart-bootstrap4/dist/dx-react-chart-bootstrap4.css';
+import KeyEntry from './KeyEntry'
+
+import { Provider } from 'react-redux'
+import coinReducer from './coinReducer'
+
+import { createStore } from 'redux';
+
+const store = createStore(coinReducer);
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,22 +58,27 @@ function App() {
   };
 
   let RenderContent = () => {
-      return <main className={classes.main}>
-        <div className={classes.topBarSpacer} />
-        <Container className={classes.container}>
-          <KChart />
-        </Container>
-        <Container className={classes.container}>
-          <KTable />
-        </Container>
-      </main>;
+      return (
+        <main className={classes.main}>
+          <Container className={classes.container}>
+            <div className={classes.topBarSpacer} />
+            <KeyEntry />
+            <div className={classes.topBarSpacer} />
+            <KChart />
+            <div className={classes.topBarSpacer} />
+            <KTable />
+          </Container>
+        </main>
+      );
   };
 
   return (
     <div className={classes.root}>
-      <CssBaseline />
-      <RenderTopBar />
-      <RenderContent />
+      <Provider store={store}>
+        <CssBaseline />
+        <RenderTopBar />
+        <RenderContent />
+      </Provider>
     </div>
   );
 }
