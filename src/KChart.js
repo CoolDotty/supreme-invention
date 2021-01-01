@@ -47,17 +47,18 @@ function KChart(props) {
 
   let coinData = [];
   if (props.data) {
-    for (let coin in props.data) {
+    
+    for (let coin of props.data) {
+      console.log(coin);
       coinData.push({
         id: coin.id,
         name: coin.name,
-        price: coin.price,
-        max: coin.high,
+        price: parseInt(coin.price),
+        max: parseInt(coin.high) - parseInt(coin.price),
       });
     }
   }
 
-  console.log(coinData);
   return (
     <Paper className={classes.container}>
       <Title>
@@ -67,26 +68,24 @@ function KChart(props) {
         data={coinData}
       >
         <ArgumentAxis />
-        <ValueAxis
-          max={10}
-        />
+        <ValueAxis />
 
         <BarSeries
-          name="Current Price"
+          name="Price"
           valueField="price"
-          argumentField="id"
+          argumentField="name"
         />
         <BarSeries
-          name="Highest Price"
+          name="Highest"
           valueField="max"
-          argumentField="id"
+          argumentField="name"
         />
         <Animation />
         <Legend position="bottom" rootComponent={Root} labelComponent={Label} />
         <ChartTitle text="Price of Various Crypto" />
         <Stack
           stacks={[
-            { series: ['price', 'max'] },
+            { series: ['Price', 'Highest'] },
           ]}
         />
       </Chart>
