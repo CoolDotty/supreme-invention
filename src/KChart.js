@@ -82,7 +82,7 @@ function KChart(props) {
         />
         <Animation />
         <Legend position="bottom" rootComponent={Root} labelComponent={Label} />
-        <ChartTitle text="Price of Various Crypto" />
+        <ChartTitle text="Prices of Various Crypto" />
         <Stack
           stacks={[
             { series: ['Price', 'Highest'] },
