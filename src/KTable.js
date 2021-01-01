@@ -6,7 +6,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { connect, useStore } from 'react-redux';
+import { connect } from 'react-redux';
 import Title from './Title'
 
 const useStyles = makeStyles((theme) => ({
@@ -17,40 +17,42 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function createEmpty() {
-  return { name: '-', price: '-', change: '-' };
+  return { id: null, name: '-', price: '-', marketCap: '-' };
 }
 
-function KTable() {
+function KTable(props) {
   const classes = useStyles();
 
-  const store = useStore().getState();
   let rows = Array(10).fill(createEmpty(), 0);
-  if (store.status) {
-    // TODO:
-    rows = [{ name: '1', price: '1', change: '1' }];
+  if (props.data) {
+    rows = [];
+    for (let coin of props.data) {
+      rows.push({ id: coin.id, name: coin.name, price: coin.price, marketCap: coin.market_cap });
+    }
+    rows.sort((a, b) => b.price - a.price );
   }
 
   return (
     <TableContainer component={Paper} className={classes.container}>
       <Title>
         Table
-            </Title>
+      </Title>
       <Table className={classes.table} size="small" aria-label="Coin Data">
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
             <TableCell align="right">Price</TableCell>
-            <TableCell align="right">Change</TableCell>
+            <TableCell align="right">Market Cap</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row, i) => (
             <TableRow key={row.name + i}>
               <TableCell component="th" scope="row">
-                {row.name}
+                {row.name}&nbsp;{row.id ? `(${row.id})` : undefined}
               </TableCell>
-              <TableCell align="right">{row.price}</TableCell>
-              <TableCell align="right">{row.change}</TableCell>
+              <TableCell align="right">${row.price.toString().toLocaleString()}</TableCell>
+              <TableCell align="right">${row.marketCap.toString().toLocaleString()}</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -60,7 +62,7 @@ function KTable() {
 }
 
 const mapStateToProps = (state) => {
-  return {}
+  return {data: state.data};
 }
 
 const mapDispatchToProps = {}

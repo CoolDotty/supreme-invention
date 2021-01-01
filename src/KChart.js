@@ -2,11 +2,16 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Title from './Title'
 import {
+  Chart,
   ArgumentAxis,
   ValueAxis,
-  Chart,
-  LineSeries,
+  BarSeries,
+  Title as ChartTitle,
+  Legend,
 } from '@devexpress/dx-react-chart-material-ui';
+import { Stack, Animation } from '@devexpress/dx-react-chart';
+import { connect } from 'react-redux';
+import { withStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -15,30 +20,85 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const data = [
-  { argument: 1, value: 10 },
-  { argument: 2, value: 20 },
-  { argument: 3, value: 30 },
-];
 
-function KChart() {
+const legendStyles = () => ({
+  root: {
+    display: 'flex',
+    margin: 'auto',
+    flexDirection: 'row',
+  },
+});
+const legendRootBase = ({ classes, ...restProps }) => (
+  <Legend.Root {...restProps} className={classes.root} />
+);
+const Root = withStyles(legendStyles, { name: 'LegendRoot' })(legendRootBase);
+const legendLabelStyles = () => ({
+  label: {
+    whiteSpace: 'nowrap',
+  },
+});
+const legendLabelBase = ({ classes, ...restProps }) => (
+  <Legend.Label className={classes.label} {...restProps} />
+);
+const Label = withStyles(legendLabelStyles, { name: 'LegendLabel' })(legendLabelBase);
+
+function KChart(props) {
   const classes = useStyles();
 
+  let coinData = [];
+  if (props.data) {
+    console.log('aaaaaaaaaa');
+    for (let coin in props.data) {
+      coinData.push({
+        id: coin.id,
+        name: coin.name,
+        price: coin.price,
+        max: coin.high,
+      });
+    }
+  }
+
+  console.log(coinData);
   return (
     <Paper className={classes.container}>
       <Title>
         Chart
-        </Title>
+      </Title>
       <Chart
-        data={data}
+        data={coinData}
       >
         <ArgumentAxis />
-        <ValueAxis />
+        <ValueAxis
+          max={10}
+        />
 
-        <LineSeries valueField="value" argumentField="argument" />
+        <BarSeries
+          name="Current Price"
+          valueField="price"
+          argumentField="id"
+        />
+        <BarSeries
+          name="Highest Price"
+          valueField="max"
+          argumentField="id"
+        />
+        <Animation />
+        <Legend position="bottom" rootComponent={Root} labelComponent={Label} />
+        <ChartTitle text="Price of Various Crypto" />
+        <Stack
+          stacks={[
+            { series: ['price', 'max'] },
+          ]}
+        />
       </Chart>
     </Paper>
   );
 }
 
-export default KChart;
+const mapStateToProps = (state) => {
+  return {data: state.data};
+}
+
+const mapDispatchToProps = {}
+
+export default connect(mapStateToProps, mapDispatchToProps)(KChart)
