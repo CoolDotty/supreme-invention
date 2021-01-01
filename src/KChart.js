@@ -47,7 +47,6 @@ function KChart(props) {
 
   let coinData = [];
   if (props.data) {
-    console.log('aaaaaaaaaa');
     for (let coin in props.data) {
       coinData.push({
         id: coin.id,
