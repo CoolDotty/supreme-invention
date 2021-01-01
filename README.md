@@ -1,5 +1,7 @@
 # supreme-invention 
 
+A (not so) simple react app that fetches prices of various crypto currencies and displays them visually.
+
 ## Installing
 * Run `npm install`
 * Run `npm start`
