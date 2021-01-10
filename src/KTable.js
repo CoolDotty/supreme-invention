@@ -8,6 +8,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { connect } from 'react-redux';
 import Title from './Title'
+import React from 'react';
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -36,8 +38,11 @@ function KTable(props) {
     <TableContainer component={Paper} className={classes.container}>
       <Title>
         Table
+        <Typography>
+          What's up?
+        </Typography>
       </Title>
-      <Table className={classes.table} size="small" aria-label="Coin Data">
+      <Table size="small" aria-label="Coin Data">
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>

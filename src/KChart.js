@@ -12,6 +12,7 @@ import {
 import { Stack, Animation } from '@devexpress/dx-react-chart';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
+import React from 'react';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -29,8 +30,10 @@ const legendStyles = () => ({
   },
 });
 const legendRootBase = ({ classes, ...restProps }) => (
+  // @ts-ignore
   <Legend.Root {...restProps} className={classes.root} />
 );
+// @ts-ignore
 const Root = withStyles(legendStyles, { name: 'LegendRoot' })(legendRootBase);
 const legendLabelStyles = () => ({
   label: {
@@ -38,8 +41,10 @@ const legendLabelStyles = () => ({
   },
 });
 const legendLabelBase = ({ classes, ...restProps }) => (
+  // @ts-ignore
   <Legend.Label className={classes.label} {...restProps} />
 );
+// @ts-ignore
 const Label = withStyles(legendLabelStyles, { name: 'LegendLabel' })(legendLabelBase);
 
 function KChart(props) {
@@ -81,7 +86,9 @@ function KChart(props) {
           argumentField="name"
         />
         <Animation />
-        <Legend position="bottom" rootComponent={Root} labelComponent={Label} />
+        <Legend position="bottom" 
+// @ts-ignore
+        rootComponent={Root} labelComponent={Label} />
         <ChartTitle text="Prices of Various Crypto" />
         <Stack
           stacks={[

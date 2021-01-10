@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(4),
     width: '100%',
   },
-  buttton: {
+  button: {
     position: 'relative',
   },
   thinker: {
@@ -31,6 +31,7 @@ export default function KeyEntry(props) {
   let [error, setError] = useState(false);
 
   const fetchMarket = (e) => {
+    // @ts-ignore
     let key = document.getElementById('api-key').value;
     setError(false);
     setThinking(true);
@@ -66,7 +67,7 @@ export default function KeyEntry(props) {
         disabled={thinking}
         error={error}
       />
-      <Button variant="contained" color="primary" size="medium" onClick={fetchMarket} disabled={thinking} className={classes.buttton}>
+      <Button variant="contained" color="primary" size="medium" onClick={fetchMarket} disabled={thinking} className={classes.button}>
         Fetch
         {thinking && <CircularProgress size={24} className={classes.thinker} />}
       </ Button>
