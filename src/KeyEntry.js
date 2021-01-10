@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const COINS = ['BTC','ETH','XRP','CRO','BCH','LTC','EOS','XLM','ATOM','LINK'];
+const COINS = ['BTC', 'ETH', 'XRP', 'CRO', 'BCH', 'LTC', 'EOS', 'XLM', 'ATOM', 'LINK'];
 
 export default function KeyEntry(props) {
   const classes = useStyles();
@@ -31,8 +31,7 @@ export default function KeyEntry(props) {
   let [error, setError] = useState(false);
 
   const fetchMarket = (e) => {
-    // @ts-ignore
-    let key = document.getElementById('api-key').value;
+    let key = document.getElementById('api-key')["value"];
     setError(false);
     setThinking(true);
     let req = new Request(
@@ -43,7 +42,7 @@ export default function KeyEntry(props) {
       }
     );
     fetch(req).then((response) => response.json()).then(coinPrices => {
-      store.dispatch({type: 'update', data: coinPrices});
+      store.dispatch({ type: 'update', data: coinPrices });
       setThinking(false);
     }).catch(() => {
       setError(true);
